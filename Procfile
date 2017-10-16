@@ -1,1 +1,1 @@
-web: java -jar -cp target/badenblog-0.0.1-SNAPSHOT.jar
+web: java -jar target/badenblog-0.0.1-SNAPSHOT.jar
