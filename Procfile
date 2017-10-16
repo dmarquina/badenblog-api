@@ -1,1 +1,1 @@
-web: java -jar -cp target/classes:target/dependency/* Badenblog 9000
+web: java -jar -cp target/badenblog-0.0.1-SNAPSHOT.jar 9000
