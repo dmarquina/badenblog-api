@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -Dserver.port=$PORT -cp target/classes/:target/dependency
+web: java -jar -Dserver.port=$PORT target/badenblog-0.0.1-SNAPSHOT.jar
