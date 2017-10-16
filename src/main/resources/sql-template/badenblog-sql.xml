@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<entry key="findAllCategories">
+        <![CDATA[	
+			SELECT C.ID_CATEGORY AS "idCategory", C.NAME AS "name"
+		    FROM CATEGORY C
+		    ORDER BY C.NAME
+		]]> 
+	</entry>
+	<entry key="findIdPosts">
+		<![CDATA[	
+			SELECT 
+			    ID_POST AS 'idPost'
+			FROM
+			    POST 
+			WHERE
+			    STATE = :codState
+			LIMIT :rowStart,:offset
+		]]>
+	</entry>
+	<entry key="findAllPosts">
+        <![CDATA[	
+			SELECT P.ID_POST AS "idPost"
+			,P.TITTLE AS "postName"
+			,P.MIN_AGE AS "minAge"
+			,P.MAX_AGE AS "maxAge"
+			,P.DESCRIPTION AS "description" 
+			,C.NAME AS "category"
+			,CONCAT(U.NAME,' ',U.LAST_NAME) AS "owner"
+			FROM POST P
+			LEFT JOIN POSTCATEGORY PC ON P.ID_POST = PC.ID_POST
+			LEFT JOIN CATEGORY C ON PC.ID_CATEGORY = C.ID_CATEGORY
+			LEFT JOIN USERPROFILE U ON P.ID_USER = U.ID_USER 
+			WHERE P.STATE = :codState
+			AND P.ID_POST in (:idPosts)
+		]]> 
+	</entry>
+	<entry key="findPostsByCategory">
+	       <![CDATA[
+			SELECT 
+			    P.ID_POST AS 'idPost'
+			FROM
+			    POST P
+			INNER JOIN POSTCATEGORY PC ON P.ID_POST = PC.ID_POST
+			INNER JOIN CATEGORY C ON PC.ID_CATEGORY = C.ID_CATEGORY 
+			WHERE
+			    P.STATE = :codState
+			AND C.ID_CATEGORY IN (:idCategories)
+			LIMIT :rowStart,:offset
+		]]>
+	</entry>
+	
+	<entry key="findPostById">
+	       <![CDATA[
+			SELECT 
+			    P.ID_POST AS 'idPost',
+			    P.TITTLE AS 'postName',
+			    P.MIN_AGE AS "minAge",
+				P.MAX_AGE AS "maxAge",
+			    P.DESCRIPTION AS 'description',
+			    P.DATE_INSERT AS 'dateInsert',
+			    CONCAT(U.NAME, ' ', U.LAST_NAME) AS 'owner',
+			    C.NAME AS 'category',
+			    M.NAME AS 'material'
+			FROM
+			    POST P
+			LEFT JOIN
+			    POSTCATEGORY PC ON P.ID_POST = PC.ID_POST
+			LEFT JOIN
+			    CATEGORY C ON PC.ID_CATEGORY = C.ID_CATEGORY
+			LEFT JOIN
+			    POSTMATERIAL PM ON P.ID_POST = PM.ID_POST
+			LEFT JOIN
+			    MATERIAL M ON PM.ID_MATERIAL = M.ID_MATERIAL
+			LEFT JOIN
+			    USERPROFILE U ON P.ID_USER = U.ID_USER
+			WHERE
+			    P.STATE = :codState AND P.ID_POST = :idPost
+		]]>
+	</entry>
+	<entry key="searchPosts">
+       <![CDATA[
+			SELECT DISTINCT
+				P.ID_POST
+			FROM POST P
+			LEFT JOIN
+				POSTCATEGORY PC ON P.ID_POST = PC.ID_POST
+			LEFT JOIN
+				CATEGORY C ON PC.ID_CATEGORY = C.ID_CATEGORY
+			LEFT JOIN
+				POSTMATERIAL PM ON P.ID_POST = PM.ID_POST
+			LEFT JOIN
+				MATERIAL M ON PM.ID_MATERIAL = M.ID_MATERIAL
+			WHERE
+				P.STATE = :codState
+			AND (P.TITTLE LIKE :tittleLike
+				OR P.DESCRIPTION LIKE :descriptionLike
+				OR M.NAME LIKE :materialLike
+				OR C.NAME LIKE :categoryLike)
+			LIMIT :rowStart,:offset
+		]]>
+	</entry>
+	
+
+</properties>
