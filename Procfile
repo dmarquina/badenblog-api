@@ -1,1 +1,1 @@
-web: java -jar target/badenblogAPI-0.0.1-SNAPSHOT.jar
+web: java $JAVA_OPTS -cp target/classes:target/dependency/* badenblogAPI $PORT
