@@ -1,1 +1,1 @@
-web: java -jar -cp target/classes:target/dependency/* badenblog-api 9000
+web: java -jar -cp target/classes:target/dependency/* Application 9000
