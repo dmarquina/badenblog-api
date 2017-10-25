@@ -1,5 +1,6 @@
 package com.badenblog.dao;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import com.badenblog.persistence.dao.ICrudDAO;
@@ -13,9 +14,15 @@ public interface PostDao extends ICrudDAO {
 
 	List<PostFeedResult> findAllActives(List<Integer> idPosts);
 
-	List<Integer> findIdActivePosts(int rowStart, int offset);
+	BigInteger findTotalIdActivePosts();
 
-	List<Integer> findByCategory(int rowStart, int offset, List<Integer> idCategories);
+	List<Integer> findIdActivePosts(int offset, int size);
 
-	List<Integer> searchPosts(int rowStart, int offset, String searchField);
+	BigInteger findTotalPostByCategory(List<Integer> idCategories);
+	
+	List<Integer> findByCategory(int offset, int size, List<Integer> idCategories);
+	
+	BigInteger totalSearchPosts(String searchField);
+
+	List<Integer> searchPosts(int offset, int size, String searchField);
 }

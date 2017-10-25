@@ -8,6 +8,16 @@
 		    ORDER BY C.NAME
 		]]> 
 	</entry>
+	<entry key="findTotalIdPosts">
+		<![CDATA[	
+			SELECT 
+			    COUNT(ID_POST)
+			FROM
+			    POST 
+			WHERE
+			    STATE = :codState
+		]]>
+	</entry>
 	<entry key="findIdPosts">
 		<![CDATA[	
 			SELECT 
@@ -16,7 +26,7 @@
 			    POST 
 			WHERE
 			    STATE = :codState
-			LIMIT :rowStart,:offset
+			LIMIT :offset, :size
 		]]>
 	</entry>
 	<entry key="findAllPosts">
@@ -36,6 +46,19 @@
 			AND P.ID_POST in (:idPosts)
 		]]> 
 	</entry>
+	<entry key="findTotalPostsByCategory">
+	       <![CDATA[
+			SELECT 
+			    COUNT(P.ID_POST)
+			FROM
+			    POST P
+			INNER JOIN POSTCATEGORY PC ON P.ID_POST = PC.ID_POST
+			INNER JOIN CATEGORY C ON PC.ID_CATEGORY = C.ID_CATEGORY 
+			WHERE
+			    P.STATE = :codState
+			AND C.ID_CATEGORY IN (:idCategories)
+		]]>
+	</entry>
 	<entry key="findPostsByCategory">
 	       <![CDATA[
 			SELECT 
@@ -47,7 +70,7 @@
 			WHERE
 			    P.STATE = :codState
 			AND C.ID_CATEGORY IN (:idCategories)
-			LIMIT :rowStart,:offset
+			LIMIT :offset, :size
 		]]>
 	</entry>
 	
@@ -79,6 +102,26 @@
 			    P.STATE = :codState AND P.ID_POST = :idPost
 		]]>
 	</entry>
+	<entry key="totalSearchPosts">
+       <![CDATA[
+			SELECT COUNT(DISTINCT P.ID_POST)
+			FROM POST P
+			LEFT JOIN
+				POSTCATEGORY PC ON P.ID_POST = PC.ID_POST
+			LEFT JOIN
+				CATEGORY C ON PC.ID_CATEGORY = C.ID_CATEGORY
+			LEFT JOIN
+				POSTMATERIAL PM ON P.ID_POST = PM.ID_POST
+			LEFT JOIN
+				MATERIAL M ON PM.ID_MATERIAL = M.ID_MATERIAL
+			WHERE
+				P.STATE = :codState
+			AND (P.TITTLE LIKE :tittleLike
+				OR P.DESCRIPTION LIKE :descriptionLike
+				OR M.NAME LIKE :materialLike
+				OR C.NAME LIKE :categoryLike)
+		]]>
+	</entry>
 	<entry key="searchPosts">
        <![CDATA[
 			SELECT DISTINCT
@@ -98,7 +141,7 @@
 				OR P.DESCRIPTION LIKE :descriptionLike
 				OR M.NAME LIKE :materialLike
 				OR C.NAME LIKE :categoryLike)
-			LIMIT :rowStart,:offset
+			LIMIT :offset, :size
 		]]>
 	</entry>
 	

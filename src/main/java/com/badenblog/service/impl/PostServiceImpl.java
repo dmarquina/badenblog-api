@@ -96,12 +96,12 @@ public class PostServiceImpl implements PostService {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public Page<PostFeedResponse> findAllActives(Pageable pageable) {
-		int rowStart = pageable.getOffset() - pageable.getPageSize();
+		long totalIdPosts = postDao.findTotalIdActivePosts().longValue();
 		int offset = pageable.getOffset();
-		List<Integer> idPosts = postDao.findIdActivePosts(rowStart, offset);
+		List<Integer> idPosts = postDao.findIdActivePosts(offset,pageable.getPageSize());
 		if (!idPosts.isEmpty()) {
 			List<PostFeedResult> result = postDao.findAllActives(idPosts);
-			return postFeedResultToPage(result);
+			return postFeedResultToPage(result, pageable, totalIdPosts);
 		} else {
 			return null;
 		}
@@ -111,9 +111,9 @@ public class PostServiceImpl implements PostService {
 	@Transactional
 	public PostDetailResponse findById(int idPost) {
 		List<PostDetailResult> result = postDao.findById(idPost);
-		if(result != null){
+		if (result != null) {
 			return postDetailResultToResponse(result);
-		}else{
+		} else {
 			return null;
 		}
 	}
@@ -122,34 +122,33 @@ public class PostServiceImpl implements PostService {
 	@Transactional
 	public Page<PostFeedResponse> findByCategory(final Pageable pageable,
 			final PostByCategoryRequest postByCategoryRequest) {
-		int rowStart = pageable.getOffset() - pageable.getPageSize();
+		long totalIdPosts = postDao.findTotalPostByCategory(postByCategoryRequest.getIdsCategories()).longValue();
 		int offset = pageable.getOffset();
-		List<Integer> idPosts = postDao.findByCategory(rowStart, offset, postByCategoryRequest.getIdsCategories());
+		List<Integer> idPosts = postDao.findByCategory(offset, pageable.getPageSize(), postByCategoryRequest.getIdsCategories());
 		if (!idPosts.isEmpty()) {
 			List<PostFeedResult> result = postDao.findAllActives(idPosts);
-			return postFeedResultToPage(result);
-		} else {
-			return null;
-		}
-	}
-	
-	@Override
-	@Transactional
-	public Page<PostFeedResponse> searchPosts(final Pageable pageable,
-			final String searchField) {
-		int rowStart = pageable.getOffset() - pageable.getPageSize();
-		int offset = pageable.getOffset();
-		List<Integer> idPosts = postDao.searchPosts(rowStart, offset, searchField);
-		if (!idPosts.isEmpty()) {
-			List<PostFeedResult> result = postDao.findAllActives(idPosts);
-			return postFeedResultToPage(result);
+			return postFeedResultToPage(result, pageable, totalIdPosts);
 		} else {
 			return null;
 		}
 	}
 
-	public Page<PostFeedResponse> postFeedResultToPage(List<PostFeedResult> result) {
-		Page<PostFeedResponse> pageResponse = new PageImpl<>(postFeedResultToResponse(result));
+	@Override
+	@Transactional
+	public Page<PostFeedResponse> searchPosts(final Pageable pageable, final String searchField) {
+		int offset = pageable.getOffset();
+		List<Integer> idPosts = postDao.searchPosts(offset,pageable.getPageSize(), searchField);
+		if (!idPosts.isEmpty()) {
+			List<PostFeedResult> result = postDao.findAllActives(idPosts);
+			return postFeedResultToPage(result, pageable, 0);
+		} else {
+			return null;
+		}
+	}
+
+	public Page<PostFeedResponse> postFeedResultToPage(List<PostFeedResult> result, Pageable pageable,
+			long totalResult) {
+		Page<PostFeedResponse> pageResponse = new PageImpl<>(postFeedResultToResponse(result), pageable, totalResult);
 		return pageResponse;
 	}
 
