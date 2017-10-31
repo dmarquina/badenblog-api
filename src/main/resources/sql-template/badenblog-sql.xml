@@ -49,7 +49,7 @@
 	<entry key="findTotalPostsByCategory">
 	       <![CDATA[
 			SELECT 
-			    COUNT(P.ID_POST)
+			    COUNT(DISTINCT P.ID_POST)
 			FROM
 			    POST P
 			INNER JOIN POSTCATEGORY PC ON P.ID_POST = PC.ID_POST
