@@ -136,11 +136,12 @@ public class PostServiceImpl implements PostService {
 	@Override
 	@Transactional
 	public Page<PostFeedResponse> searchPosts(final Pageable pageable, final String searchField) {
+		long totalIdPosts = postDao.totalSearchPosts(searchField).longValue();
 		int offset = pageable.getOffset();
 		List<Integer> idPosts = postDao.searchPosts(offset,pageable.getPageSize(), searchField);
 		if (!idPosts.isEmpty()) {
 			List<PostFeedResult> result = postDao.findAllActives(idPosts);
-			return postFeedResultToPage(result, pageable, 0);
+			return postFeedResultToPage(result, pageable, totalIdPosts);
 		} else {
 			return null;
 		}
