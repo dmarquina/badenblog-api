@@ -61,7 +61,7 @@
 	</entry>
 	<entry key="findPostsByCategory">
 	       <![CDATA[
-			SELECT 
+			SELECT DISTINCT
 			    P.ID_POST AS 'idPost'
 			FROM
 			    POST P
