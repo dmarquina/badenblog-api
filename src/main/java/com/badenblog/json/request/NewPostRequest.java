@@ -1,14 +1,17 @@
 package com.badenblog.json.request;
 
-import java.util.List;
-
 import com.badenblog.persistence.domain.Post;
 import com.badenblog.util.dto.CategoryDTO;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 public class NewPostRequest {
 	Post post;
-	List<String> materials;
-	List<CategoryDTO> categories;
+	Set<String> materials = new HashSet<>();
+	List<CategoryDTO> categories = new ArrayList<>();
 	
 	public Post getPost() {
 		return post;
@@ -16,10 +19,10 @@ public class NewPostRequest {
 	public void setPost(Post post) {
 		this.post = post;
 	}
-	public List<String> getMaterials() {
+	public Set<String> getMaterials() {
 		return materials;
 	}
-	public void setMaterials(List<String> materials) {
+	public void setMaterials(Set<String> materials) {
 		this.materials = materials;
 	}
 	public List<CategoryDTO> getCategories() {

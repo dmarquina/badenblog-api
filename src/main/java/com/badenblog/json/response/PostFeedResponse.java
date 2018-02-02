@@ -1,6 +1,7 @@
 package com.badenblog.json.response;
 
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class PostFeedResponse {
 	private Integer idPost;
@@ -9,7 +10,7 @@ public class PostFeedResponse {
 	private Integer maxAge;
 	private String description;
 	private String owner;
-	private List<String> categories;
+	private Set<String> categories = new HashSet<>();
 
 	public Integer getIdPost() {
 		return idPost;
@@ -43,11 +44,11 @@ public class PostFeedResponse {
 		this.owner = owner;
 	}
 
-	public List<String> getCategories() {
+	public Set<String> getCategories() {
 		return categories;
 	}
 
-	public void setCategories(List<String> categories) {
+	public void setCategories(Set<String> categories) {
 		this.categories = categories;
 	}
 

@@ -1,158 +1,166 @@
 package com.badenblog.persistence.domain;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 
 /**
  * The persistent class for the post database table.
- * 
  */
 @Entity
 @Table(name = "post")
 public class Post implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@Column(name = "id_post")
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int idPost;
+    @Id
+    @Column(name = "id_post")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int idPost;
 
-	private String tittle;
+    private String tittle;
 
-	private String description;
-	
-	private int state;
+    private String description;
 
-	private String place;
-	
-	private int likes;
-	
-	private String suggestions;
-	
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date dateInsert;
+    private int state;
 
-	@ManyToOne
-	@JoinColumn(name = "id_user")
-	private Userprofile owner;
-	
-	@OneToMany(mappedBy = "post")
-	private Set<PostCategory> postcategories;
+    private String place;
 
-	// bi-directional many-to-one association to PostMaterial
-	@OneToMany(mappedBy = "post")
-	private Set<PostMaterial> postmaterials ;
-	
-	public Post() {
-	}
+    private int likes;
 
-	public Post(final int idPost) {
-		this.idPost = idPost;
-	}
-	
-	public String getTittle() {
-		return tittle;
-	}
+    private String suggestions;
 
-	public void setTittle(String tittle) {
-		this.tittle = tittle;
-	}
+    private Integer minAge;
 
-	public String getDescription() {
-		return description;
-	}
+    private Integer maxAge;
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateInsert;
 
-	public int getState() {
-		return state;
-	}
+    @ManyToOne
+    @JoinColumn(name = "id_user")
+    private Userprofile owner;
 
-	public void setState(int state) {
-		this.state = state;
-	}
+    @OneToMany(mappedBy = "post")
+    private Set<PostCategory> postcategories;
 
-	public String getPlace() {
-		return place;
-	}
+    // bi-directional many-to-one association to PostMaterial
+    @OneToMany(mappedBy = "post")
+    private Set<PostMaterial> postmaterials;
 
-	public void setPlace(String place) {
-		this.place = place;
-	}
+    public Post() {
+    }
 
-	public String getSuggestions() {
-		return suggestions;
-	}
+    public Post(final int idPost) {
+        this.idPost = idPost;
+    }
 
-	public void setSuggestions(String suggestions) {
-		this.suggestions = suggestions;
-	}
+    public String getTittle() {
+        return tittle;
+    }
 
-	public Userprofile getOwner() {
-		return owner;
-	}
+    public void setTittle(String tittle) {
+        this.tittle = tittle;
+    }
 
-	public void setOwner(Userprofile owner) {
-		this.owner = owner;
-	}
-	
-	public Set<PostMaterial> getPostmaterials() {
-		return postmaterials;
-	}
-	
-	public void setPostmaterials(Set<PostMaterial> postmaterials) {
-		this.postmaterials = postmaterials;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public Set<PostCategory> getPostcategories() {
-		return postcategories;
-	}
-	
-	public void setPostcategories(Set<PostCategory> postcategories) {
-		this.postcategories = postcategories;
-	}
-	
-	public int getIdPost() {
-		return idPost;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public void setIdPost(int idPost) {
-		this.idPost = idPost;
-	}
+    public int getState() {
+        return state;
+    }
 
-	public Date getDateInsert() {
-		return dateInsert;
-	}
+    public void setState(int state) {
+        this.state = state;
+    }
 
-	public void setDateInsert(Date dateInsert) {
-		this.dateInsert = dateInsert;
-	}
+    public String getPlace() {
+        return place;
+    }
 
-	public int getLikes() {
-		return likes;
-	}
+    public void setPlace(String place) {
+        this.place = place;
+    }
 
-	public void setLikes(int likes) {
-		this.likes = likes;
-	}
+    public String getSuggestions() {
+        return suggestions;
+    }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+    public void setSuggestions(String suggestions) {
+        this.suggestions = suggestions;
+    }
+
+    public Userprofile getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Userprofile owner) {
+        this.owner = owner;
+    }
+
+    public Set<PostMaterial> getPostmaterials() {
+        return postmaterials;
+    }
+
+    public void setPostmaterials(Set<PostMaterial> postmaterials) {
+        this.postmaterials = postmaterials;
+    }
+
+    public Set<PostCategory> getPostcategories() {
+        return postcategories;
+    }
+
+    public void setPostcategories(Set<PostCategory> postcategories) {
+        this.postcategories = postcategories;
+    }
+
+    public int getIdPost() {
+        return idPost;
+    }
+
+    public void setIdPost(int idPost) {
+        this.idPost = idPost;
+    }
+
+    public Date getDateInsert() {
+        return dateInsert;
+    }
+
+    public void setDateInsert(Date dateInsert) {
+        this.dateInsert = dateInsert;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
+    }
+
+    public static long getSerialversionuid() {
+        return serialVersionUID;
+    }
+
+    public Integer getMinAge() {
+        return minAge;
+    }
+
+    public void setMinAge(Integer minAge) {
+        this.minAge = minAge;
+    }
+
+    public Integer getMaxAge() {
+        return maxAge;
+    }
+
+    public void setMaxAge(Integer maxAge) {
+        this.maxAge = maxAge;
+    }
 }

@@ -1,7 +1,8 @@
 package com.badenblog.json.response;
 
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class PostDetailResponse {
 	private Integer idPost;
@@ -11,8 +12,13 @@ public class PostDetailResponse {
 	private String description;
 	private Date dateInsert;
 	private String owner;
-	private List<String> categories;
-	private List<String> materials;
+	private Set<String> categories;
+	private Set<String> materials;
+
+	public PostDetailResponse(){
+		this.categories = new HashSet();
+		this.materials = new HashSet();
+	}
 
 	public Integer getIdPost() {
 		return idPost;
@@ -46,11 +52,11 @@ public class PostDetailResponse {
 		this.owner = owner;
 	}
 
-	public List<String> getCategories() {
-		return categories;
+	public Set<String> getCategories() {
+		return this.categories;
 	}
 
-	public void setCategories(List<String> categories) {
+	public void setCategories(Set<String> categories) {
 		this.categories = categories;
 	}
 
@@ -62,11 +68,11 @@ public class PostDetailResponse {
 		this.dateInsert = dateInsert;
 	}
 
-	public List<String> getMaterials() {
-		return materials;
+	public Set<String> getMaterials() {
+		return this.materials;
 	}
 
-	public void setMaterials(List<String> materials) {
+	public void setMaterials(Set<String> materials) {
 		this.materials = materials;
 	}
 
