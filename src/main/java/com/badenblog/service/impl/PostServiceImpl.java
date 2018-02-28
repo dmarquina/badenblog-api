@@ -51,7 +51,10 @@ public class PostServiceImpl implements PostService {
     @Override
     public NewPostResponse create(final NewPostRequest newPostRequest) {
         try {
-            Post newPost = newPostRequest.getPost();
+            Post newPost = new Post();
+            newPost.setTittle(newPostRequest.getTittle());
+            newPost.setDescription(newPostRequest.getDescription());
+            newPost.setMinAge(newPostRequest.getMinAge());
             newPost.setState(Constants.ACTIVE_STATE);
             newPost.setLikes(Constants.CERO_ENTERO);
             newPost.setDateInsert(new Date());

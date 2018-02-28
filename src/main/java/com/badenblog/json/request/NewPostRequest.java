@@ -1,24 +1,22 @@
 package com.badenblog.json.request;
 
-import com.badenblog.persistence.domain.Post;
 import com.badenblog.util.dto.CategoryDTO;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class NewPostRequest {
-	Post post;
+	private String tittle;
+	private String description;
+	private Integer minAge;
 	Set<String> materials = new HashSet<>();
 	List<CategoryDTO> categories = new ArrayList<>();
-	
-	public Post getPost() {
-		return post;
-	}
-	public void setPost(Post post) {
-		this.post = post;
-	}
+
+	public String getTittle() {return tittle;}
+	public void setTittle(String tittle) {this.tittle = tittle;}
+	public String getDescription() {return description;}
+	public void setDescription(String description) {this.description = description;}
+	public Integer getMinAge() {return minAge;}
+	public void setMinAge(Integer minAge) {this.minAge = minAge;}
 	public Set<String> getMaterials() {
 		return materials;
 	}
